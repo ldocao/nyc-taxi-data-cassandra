@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS n_trips_by_max_temperature (
     pickup_datetime TIMESTAMP,
     dropoff_datetime TIMESTAMP,
 
-    store_and_fwd_flag VARCHAR(1),
+    store_and_fwd_flag VARCHAR,
     rate_code_id INT,
     pickup_longitude FLOAT,
     pickup_latitude FLOAT,
