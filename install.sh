@@ -7,3 +7,5 @@ echo "deb http://www.apache.org/dist/cassandra/debian 40x main" | sudo tee -a /e
 curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install -y cassandra
+
+gsutil -m cp -r gs://nyc-taxi-data $HOME/
