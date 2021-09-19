@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cqlsh -f create_tables.cql
+cqlsh -f $HOME/nyc-taxi-data-cassandra/create_tables.cql
 
 data=`ls -1 $HOME/nyc-taxi-data/denormalized/`
 N=`grep -c ^processor /proc/cpuinfo`
