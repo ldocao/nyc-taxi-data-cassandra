@@ -1,15 +1,22 @@
-CREATE KEYSPACE trip
+CREATE KEYSPACE IF NOT EXISTS trip
    WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
 
 USE trip;
 
-CREATE TABLE trip_information (
+
+DROP TABLE IF EXISTS trip_information;
+DROP TABLE IF EXISTS n_trips_by_year;
+DROP TABLE IF EXISTS n_trips_by_vendor;
+DROP TABLE IF EXISTS n_trips_by_max_temperature;
+
+
+CREATE TABLE IF NOT EXISTS trip_information (
     trip_id INT,
     vendor_id TEXT,
     pickup_datetime TIMESTAMP,
     dropoff_datetime TIMESTAMP,
 
-    store_and_fwd_flag VARCHAR(1),
+    store_and_fwd_flag VARCHAR,
     rate_code_id INT,
     pickup_longitude FLOAT,
     pickup_latitude FLOAT,
@@ -28,24 +35,24 @@ CREATE TABLE trip_information (
     payment_type TEXT,
     trip_type INT,
 
-    precipitation rain FLOAT,
+    precipitation FLOAT,
     snow_depth FLOAT,
     snowfall FLOAT,
-    max_temperature max_temp INT,
-    min_temperature min_temp INT,
-    average_wind_speed win FLOAT,
-    PRIMARY KEY (id)
+    max_temperature INT,
+    min_temperature INT,
+    average_wind_speed FLOAT,
+    PRIMARY KEY (trip_id)
 );
 
 
-CREATE TABLE n_trips_by_year (
+CREATE TABLE IF NOT EXISTS n_trips_by_year (
     year INT,
     trip_id INT,
     vendor_id TEXT,
     pickup_datetime TIMESTAMP,
     dropoff_datetime TIMESTAMP,
 
-    store_and_fwd_flag VARCHAR(1),
+    store_and_fwd_flag VARCHAR,
     rate_code_id INT,
     pickup_longitude FLOAT,
     pickup_latitude FLOAT,
@@ -64,22 +71,22 @@ CREATE TABLE n_trips_by_year (
     payment_type TEXT,
     trip_type INT,
 
-    precipitation rain FLOAT,
+    precipitation FLOAT,
     snow_depth FLOAT,
     snowfall FLOAT,
     max_temperature INT,
     min_temperature INT,
-    average_wind_speed win FLOAT,
+    average_wind_speed FLOAT,
     PRIMARY KEY (year, trip_id)
 );
 
-CREATE TABLE n_trips_by_vendor (
+CREATE TABLE IF NOT EXISTS n_trips_by_vendor (
     trip_id INT,
     vendor_id TEXT,
     pickup_datetime TIMESTAMP,
     dropoff_datetime TIMESTAMP,
 
-    store_and_fwd_flag VARCHAR(1),
+    store_and_fwd_flag VARCHAR,
     rate_code_id INT,
     pickup_longitude FLOAT,
     pickup_latitude FLOAT,
@@ -98,17 +105,17 @@ CREATE TABLE n_trips_by_vendor (
     payment_type TEXT,
     trip_type INT,
 
-    precipitation rain FLOAT,
+    precipitation FLOAT,
     snow_depth FLOAT,
     snowfall FLOAT,
     max_temperature INT,
     min_temperature INT,
-    average_wind_speed win FLOAT,
+    average_wind_speed FLOAT,
     PRIMARY KEY (vendor_id, trip_id)
 );
 
 
-CREATE TABLE n_trips_by_max_temperature (
+CREATE TABLE IF NOT EXISTS n_trips_by_max_temperature (
     trip_id INT,
     vendor_id TEXT,
     pickup_datetime TIMESTAMP,
@@ -133,11 +140,11 @@ CREATE TABLE n_trips_by_max_temperature (
     payment_type TEXT,
     trip_type INT,
 
-    precipitation rain FLOAT,
+    precipitation FLOAT,
     snow_depth FLOAT,
     snowfall FLOAT,
     max_temperature INT,
     min_temperature INT,
-    average_wind_speed win FLOAT,
+    average_wind_speed FLOAT,
     PRIMARY KEY (max_temperature, trip_id)
 );
