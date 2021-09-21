@@ -7,5 +7,9 @@ N=`grep -c ^processor /proc/cpuinfo`
 for f in $data
 do
     ((i=i%N)); ((i++==0)) && wait
-    echo "COPY trip.trip_information  FROM STDIN;";  gzip -dc $HOME/nyc-taxi-data/denormalized/$f | cqlsh &
+    gunzip $HOME/nyc-taxi-data/denormalized/$f -c > $f.unzip #this is totally not a good filename but we will delete it anyway
+    cat load_trip_information.sql | sed "s/{{ filename }}/$f.unzip/"  > load_trip_information_$f.sql
+    cqlsh -f load_trip_information_$f.sql
+    rm load_trip_information_$f.sql
+    rm $f.unzip
 done
