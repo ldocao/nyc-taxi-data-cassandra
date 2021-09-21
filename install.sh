@@ -9,3 +9,8 @@ sudo apt-get update
 sudo apt-get install -y cassandra
 
 gsutil -m cp -r gs://nyc-taxi-data $HOME/
+
+# you should set in /etc/cassandra/cassandra.yaml : enable_user_defined_functions: true
+# then execute the code below
+# sudo systemctl restart cassandra
+# cqlsh -f $HOME/nyc-taxi-data-cassandra/create_extract_year.cql
