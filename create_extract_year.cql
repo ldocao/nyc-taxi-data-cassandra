@@ -1,5 +1,8 @@
 -- you should set in cassandra.yaml, and restart : enable_user_defined_functions: true
 
+CREATE KEYSPACE IF NOT EXISTS trip
+   WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 1};
+   
 USE trip;
 
 
