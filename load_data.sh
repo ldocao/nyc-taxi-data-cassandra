@@ -3,11 +3,9 @@
 cqlsh -f $HOME/nyc-taxi-data-cassandra/create_tables.cql
 
 data=`ls -1 $HOME/nyc-taxi-data/denormalized/*.csv.gz`
-N=`grep -c ^processor /proc/cpuinfo`
 
 for f in $data
 do
-    ((i=i%N)); ((i++==0)) && wait
     #load the trip_information table
     gunzip -c $f > $f.unzip #this is totally not a good filename but we will delete it anyway
     cassandra-loader -f $f.unzip -host 127.0.0.1 -schema "trip.trip_information(trip_id,vendor_id,pickup_datetime,dropoff_datetime,store_and_fwd_flag,rate_code_id,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude,passenger_count,trip_distance,fare_amount,extra,mta_tax,tip_amount,tolls_amount,ehail_fee,improvement_surcharge,total_amount,payment_type,trip_type,precipitation,snow_depth,snowfall,max_temperature,min_temperature,average_wind_speed)" -dateFormat "yyy-MM-dd HH:mm:ss"
