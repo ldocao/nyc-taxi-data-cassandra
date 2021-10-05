@@ -13,13 +13,6 @@ do
 done
 
 #load the other tables
-cqlsh -f $HOME/nyc-taxi-data-cassandra/extract_n_trips_by_year.cql #we could run cassandra-unloader instead, and pipe it directly to the destination table
-cqlsh -f $HOME/nyc-taxi-data-cassandra/extract_n_trips_by_vendor.cql
-cqlsh -f $HOME/nyc-taxi-data-cassandra/extract_n_trips_by_max_temperature.cql
-
-cassandra-loader -host 127.0.0.1 -f temp_n_trips_by_year.csv -schema "trip.n_trips_by_year(year, trip_id)"
-cassandra-loader -host 127.0.0.1 -f temp_n_trips_by_vendor.csv -schema "trip.n_trips_by_vendor(vendor_id, trip_id)"
-cassandra-loader -host 127.0.0.1 -f temp_n_trips_by_max_temperature.csv -schema "trip.n_trips_by_max_temperature(max_temperature, trip_id)"
-rm temp_n_trips_by_year.csv
-rm temp_n_trips_by_vendor.csv
-rm temp_n_trips_by_max_temperature.csv
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(max_temperature, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_max_temperature(max_temperature, trip_id)" &
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(vendor_id, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_vendor(vendor_id, trip_id)" &
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(pickup_datetime, trip_id)" -dateFormat yyyy | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_year(year, trip_id)" &
