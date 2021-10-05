@@ -20,5 +20,13 @@ sudo mv $HOME/cassandra-unloader /usr/local/bin
 
 gsutil -m cp -r gs://nyc-taxi-data $HOME/
 
-
+# sudo emacs -nw /etc/cassandra/cassandra.yaml
+# increase read timeout (this is not actually recommended when using cassandra in general, but this is to show it's not good for aggegation)
+# read_request_timeout_in_ms: 500000
+# range_request_timeout_in_ms: 1000000
+# write_request_timeout_in_ms: 200000
+# counter_write_request_timeout_in_ms: 500000
+# cas_contention_timeout_in_ms: 100000
+# truncate_request_timeout_in_ms: 60000
+# request_timeout_in_ms: 1000000
 # sudo systemctl restart cassandra
