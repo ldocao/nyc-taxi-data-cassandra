@@ -51,21 +51,7 @@ CREATE TABLE IF NOT EXISTS n_trips_by_year (
     PRIMARY KEY (year, trip_id)
 );
 
-CREATE TABLE IF NOT EXISTS n_trips_by_vendor (
-    vendor_id TEXT,
-    trip_id INT,
-    PRIMARY KEY (vendor_id, trip_id)
-);
-
-
-CREATE TABLE IF NOT EXISTS n_trips_by_max_temperature (
-    max_temperature INT,
-    trip_id INT,
-    PRIMARY KEY (max_temperature, trip_id)
-);
 
 -- reducing gc grace periods, clears tombstone (which is a problem for count query). However, this comes with great risk of losing data if using under normal condition. But we don't care here because the data is static
 ALTER TABLE trip.trip_information with gc_grace_seconds=100;
 ALTER TABLE trip.n_trips_by_year with gc_grace_seconds=100;
-ALTER TABLE trip.n_trips_by_vendor with gc_grace_seconds=100;
-ALTER TABLE trip.n_trips_by_max_temperature with gc_grace_seconds=100;
