@@ -13,6 +13,6 @@ do
 done
 
 #load the other tables
-cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(max_temperature, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_max_temperature(max_temperature, trip_id)" &
-cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(vendor_id, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_vendor(vendor_id, trip_id)" &
-cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(pickup_datetime, trip_id)" -dateFormat yyyy | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_year(year, trip_id)" &
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(max_temperature, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_max_temperature(max_temperature, trip_id)"
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(vendor_id, trip_id)" | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_vendor(vendor_id, trip_id)"
+cassandra-unloader -f stdout -host 127.0.0.1 -schema "trip.trip_information(pickup_datetime, trip_id)" -dateFormat yyyy | cassandra-loader -f stdin -host 127.0.0.1 -schema "trip.n_trips_by_year(year, trip_id)"
